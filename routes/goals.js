@@ -19,7 +19,7 @@ router.post('/addGoal', function(req, res, next) {
     if (req.body && req.body.name && req.body.description && req.body.dueDate) {
         req.body.id = timestamp.toString();
         goals.push(req.body);
-        res.status(200).json(tasks);
+        res.status(200).json(goals);
     }
     res.status(400).json({error: 'No se pudo agregar la meta. Por favor, verifica los datos ingresados.'});
 });
