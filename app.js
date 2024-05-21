@@ -11,6 +11,92 @@ var usersRouter = require('./routes/users');
 var tasksRouter = require('./routes/tasks'); // importar la ruta de tasks
 var goalsRouter = require('./routes/goals'); // importar la ruta de goals
 
+
+const mysql = require('mysql2');
+var connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'Jcujcuj_2022',
+  database: 'desarrolloWeb'
+});
+
+connection.connect(function(err){
+    if(err){
+      console.log('Error connecting: ' + err.stack);
+      return;
+    }
+    console.log('Connected as id ' + connection.threadId);
+  }
+);
+
+let queryCreateDB = 'CREATE DATABASE IF NOT EXISTS desarrolloWeb';
+let queryCreateTableGoals = `CREATE TABLE IF NOT EXISTS goals (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL DEFAULT '',
+  description VARCHAR(255) NOT NULL DEFAULT '',
+  dueDate DATE NOT NULL,
+  PRIMARY KEY (id)
+);`;
+
+connection.query(queryCreateDB, function(err, result, fields){
+  if(err){
+    console.log(err);
+    return;
+  }else{
+  console.log(result);
+  }
+});
+
+connection.query(queryCreateTableGoals, function(err, result, fields){
+  if(err){
+    console.log(err);
+    return;
+  }else{
+  console.log(result);
+  }
+});
+
+/*let queryCreateDB = 'CREATE DATABASE IF NOT EXISTS desarrolloWeb';
+
+connection.query(queryCreateDB, function(err, result, fields) {
+  if (err) {
+    console.log('Error creating database:', err);
+    return;
+  } else {
+    console.log('Database creation result:', result);
+    
+    // Cambiar la conexión a la base de datos 'desarrolloWeb'
+    connection.changeUser({ database: 'desarrolloWeb' }, function(err) {
+      if (err) {
+        console.log('Error changing database:', err);
+        return;
+      } else {
+        console.log('Changed to database desarrolloWeb');
+        
+        let queryCreateTableGoals = `CREATE TABLE IF NOT EXISTS goals (
+          id INT(11) NOT NULL AUTO_INCREMENT,
+          name VARCHAR(255) NOT NULL DEFAULT '',
+          description VARCHAR(255) NOT NULL DEFAULT '',
+          dueDate DATE NOT NULL,
+          PRIMARY KEY (id)
+        );`;
+
+        connection.query(queryCreateTableGoals, function(err, result, fields) {
+          if (err) {
+            console.log('Error creating table:', err);
+            return;
+          } else {
+            console.log('Table creation result:', result);
+          }
+        });
+      }
+    });
+  }
+});*/
+
+//connection.destroy();
+
+
 var app = express();
 
 // view engine setup
