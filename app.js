@@ -37,6 +37,14 @@ let queryCreateTableGoals = `CREATE TABLE IF NOT EXISTS goals (
   dueDate DATE NOT NULL,
   PRIMARY KEY (id)
 );`;
+let queryCreateTableTasks = `CREATE TABLE IF NOT EXISTS tasks (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL DEFAULT '',
+  description VARCHAR(255) NOT NULL DEFAULT '',
+  dueDate DATE NOT NULL,
+  PRIMARY KEY (id)
+);`;
+
 
 connection.query(queryCreateDB, function(err, result, fields){
   if(err){
@@ -56,46 +64,16 @@ connection.query(queryCreateTableGoals, function(err, result, fields){
   }
 });
 
-/*let queryCreateDB = 'CREATE DATABASE IF NOT EXISTS desarrolloWeb';
-
-connection.query(queryCreateDB, function(err, result, fields) {
-  if (err) {
-    console.log('Error creating database:', err);
+connection.query(queryCreateTableTasks, function(err, result, fields){
+  if(err){
+    console.log(err);
     return;
-  } else {
-    console.log('Database creation result:', result);
-    
-    // Cambiar la conexión a la base de datos 'desarrolloWeb'
-    connection.changeUser({ database: 'desarrolloWeb' }, function(err) {
-      if (err) {
-        console.log('Error changing database:', err);
-        return;
-      } else {
-        console.log('Changed to database desarrolloWeb');
-        
-        let queryCreateTableGoals = `CREATE TABLE IF NOT EXISTS goals (
-          id INT(11) NOT NULL AUTO_INCREMENT,
-          name VARCHAR(255) NOT NULL DEFAULT '',
-          description VARCHAR(255) NOT NULL DEFAULT '',
-          dueDate DATE NOT NULL,
-          PRIMARY KEY (id)
-        );`;
-
-        connection.query(queryCreateTableGoals, function(err, result, fields) {
-          if (err) {
-            console.log('Error creating table:', err);
-            return;
-          } else {
-            console.log('Table creation result:', result);
-          }
-        });
-      }
-    });
+  }else{
+  console.log(result);
   }
-});*/
+});
 
-//connection.destroy();
-
+connection.destroy();
 
 var app = express();
 
